@@ -68,25 +68,25 @@ async function initDB() {
 
 // Auth Routes
 app.post('/api/register', async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
+  const { email, password } = req.body;  // ← изменили здесь
+  if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
   
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [username, hashedPassword]);
+    await pool.query('INSERT INTO users (username, password) VALUES ($1, $2)', [email, hashedPassword]); // ← в таблице username заменяем на email
     res.json({ message: 'User registered successfully' });
   } catch (err: any) {
-    if (err.code === '23505') { // Unique violation in Postgres
-      return res.status(400).json({ error: 'Username already exists' });
+    if (err.code === '23505') { // уникальный ключ
+      return res.status(400).json({ error: 'Email already exists' });
     }
+    console.error(err); // добавь для дебага
     res.status(500).json({ error: 'Database error' });
   }
 });
-
 app.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;  // ← изменили здесь
   try {
-    const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    const result = await pool.query('SELECT * FROM users WHERE username = $1', [email]); // ищем по email
     const user = result.rows[0];
     
     if (!user) return res.status(400).json({ error: 'User not found' });
@@ -98,6 +98,7 @@ app.post('/api/login', async (req, res) => {
     res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'none' });
     res.json({ username: user.username });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Database error' });
   }
 });
