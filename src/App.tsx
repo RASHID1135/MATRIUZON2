@@ -164,8 +164,8 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [user, setUser] = useState<{ username: string } | null>(null);
-  const [authForm, setAuthForm] = useState({ username: '', password: '' });
+  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [dbMovies, setDbMovies] = useState<Movie[]>([]);
 
@@ -234,7 +234,7 @@ export default function App() {
       }
       
       if (authMode === 'login') {
-        setUser({ username: data.username });
+        setUser({ email: data.username });
         setIsAuthModalOpen(false);
       } else {
         setAuthMode('login');
@@ -849,18 +849,15 @@ export default function App() {
                   <label className={`block text-xs font-bold uppercase tracking-widest mb-2 ${
                     theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
                   }`}>
-                    Имя пользователя
-                  </label>
-                  <input 
-                    type="text" 
-                    required
-                    value={authForm.username}
-                    onChange={(e) => setAuthForm({ ...authForm, username: e.target.value })}
-                    className={`w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600/50 transition-all ${
-                      theme === 'dark' ? 'bg-white/5 border-white/10 text-white' : 'bg-gray-50 border-black/10 text-black'
-                    }`}
-                    placeholder="Username"
-                  />
+                    <label>Email</label>
+
+                    <input 
+                     type="email"
+                     required
+                     value={authForm.email}
+                      onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                     placeholder="example@gmail.com"
+                      />
                 </div>
                 <div>
                   <label className={`block text-xs font-bold uppercase tracking-widest mb-2 ${
