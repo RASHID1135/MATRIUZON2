@@ -846,19 +846,25 @@ export default function App() {
                   <p className="text-red-500 text-xs font-bold text-center">{authError}</p>
                 )}
                 <div>
-                  <label className={`block text-xs font-bold uppercase tracking-widest mb-2 ${
-                    theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
-                  }`}>
-                    <label>Email</label>
+  <label className={`block text-xs font-bold uppercase tracking-widest mb-2 ${
+    theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
+  }`}>
+    Email
+  </label>
 
-                    <input 
-                     type="email"
-                     required
-                     value={authForm.email}
-                      onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
-                     placeholder="example@gmail.com"
-                      />
-                </div>
+  <input 
+    type="email"
+    required
+    value={authForm.email}
+    onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+    className={`w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-600/50 ${
+      theme === 'dark'
+        ? 'bg-white/5 border-white/10 text-white'
+        : 'bg-gray-50 border-black/10 text-black'
+    }`}
+    placeholder="example@gmail.com"
+  />
+</div>
                 <div>
                   <label className={`block text-xs font-bold uppercase tracking-widest mb-2 ${
                     theme === 'dark' ? 'text-gray-500' : 'text-gray-400'
