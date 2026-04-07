@@ -381,11 +381,17 @@ export default function App() {
             />
           </div>
           
+          {/* Блок авторизации: иконка пользователя или кнопка входа */}
           {user ? (
-            <div className="flex items-center gap-4">
-              <span className={`text-sm font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-                {user.username}
-              </span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Аватар с первой буквой */}
+              <div 
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-colors shadow-lg"
+                title={user.username}
+              >
+                {user.username.charAt(0)}
+              </div>
+              {/* Кнопка выхода */}
               <button 
                 onClick={handleLogout}
                 className="p-2 rounded-full hover:bg-red-600/10 text-red-600 transition-colors"
@@ -395,6 +401,7 @@ export default function App() {
               </button>
             </div>
           ) : (
+            /* Кнопка входа, если пользователь не авторизован */
             <button 
               onClick={() => {
                 setAuthMode('login');
@@ -408,7 +415,6 @@ export default function App() {
               <LogIn className="w-6 h-6" />
             </button>
           )}
-
           {/* Theme Switcher - Desktop */}
           <button 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
