@@ -384,12 +384,15 @@ export default function App() {
        {/* Блок пользователя или входа */}
           {user ? (
             <div className="flex items-center gap-2 sm:gap-4">
+              {/* Иконка профиля (берет букву из Email) */}
               <div 
-                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-colors shadow-lg"
-                title={user.username}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-all shadow-lg border border-white/20"
+                title={user.email}
               >
-                {user.username?.trim().charAt(0).toUpperCase() || '?'}
+                {/* Используем user.email вместо user.username */}
+                {String(user.email || '?').trim().charAt(0).toUpperCase()}
               </div>
+              
               <button 
                 onClick={handleLogout}
                 className="p-2 rounded-full hover:bg-red-600/10 text-red-600 transition-colors"
