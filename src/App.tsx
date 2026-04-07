@@ -381,15 +381,15 @@ export default function App() {
             />
           </div>
           
-          {/* Блок авторизации: иконка пользователя или кнопка входа */}
+       {/* Блок пользователя или входа */}
           {user ? (
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* Аватар с первой буквой */}
+              {/* Иконка с первой буквой */}
               <div 
                 className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-colors shadow-lg"
                 title={user.username}
               >
-                {user.username.charAt(0)}
+                {user.username?.charAt(0) || '?'}
               </div>
               {/* Кнопка выхода */}
               <button 
@@ -401,7 +401,7 @@ export default function App() {
               </button>
             </div>
           ) : (
-            /* Кнопка входа, если пользователь не авторизован */
+            /* Кнопка входа для неавторизованных */
             <button 
               onClick={() => {
                 setAuthMode('login');
