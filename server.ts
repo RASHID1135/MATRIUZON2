@@ -123,10 +123,10 @@ app.post('/api/login', async (req, res) => {
     );
 
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none'
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none'
+});
 
     res.json({ email: user.email });
 
