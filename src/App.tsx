@@ -164,7 +164,7 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  String(user?.email || '?').trim().charAt(0).toUpperCase()
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [dbMovies, setDbMovies] = useState<Movie[]>([]);
@@ -391,7 +391,10 @@ export default function App() {
       {/* Проверяем и email, и username */}
       {String(user.email || user.username || '?').trim().charAt(0).toUpperCase()}
     </div>
-    <button onClick={handleLogout} ... >
+    <button 
+  onClick={handleLogout}
+  className="p-2 rounded-full hover:bg-red-600/10 text-red-600"
+>
       <LogOut className="w-5 h-5" />
     </button>
   </div>
