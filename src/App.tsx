@@ -164,7 +164,6 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  String(user?.email || '?').trim().charAt(0).toUpperCase()
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [dbMovies, setDbMovies] = useState<Movie[]>([]);
@@ -388,17 +387,32 @@ export default function App() {
       className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-all shadow-lg border border-white/20"
       title={user.email || user.username}
     >
-      {/* Проверяем и email, и username */}
       {String(user.email || user.username || '?').trim().charAt(0).toUpperCase()}
     </div>
+
     <button 
-  onClick={handleLogout}
-  className="p-2 rounded-full hover:bg-red-600/10 text-red-600"
->
+      onClick={handleLogout}
+      className="p-2 rounded-full hover:bg-red-600/10 text-red-600"
+    >
       <LogOut className="w-5 h-5" />
     </button>
   </div>
-) : ( ... )}
+) : (
+  <button 
+    onClick={() => {
+      setAuthMode('login');
+      setIsAuthModalOpen(true);
+    }}
+    className={`p-2 rounded-full transition-colors ${
+      theme === 'dark'
+        ? 'text-white hover:bg-white/10'
+        : 'text-black hover:bg-black/10'
+    }`}
+    title={t.login}
+  >
+    <LogIn className="w-6 h-6" />
+  </button>
+)}
             /* Кнопка входа для неавторизованных */
             <button 
               onClick={() => {
