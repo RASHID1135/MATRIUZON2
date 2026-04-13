@@ -166,10 +166,12 @@ export default function App() {
   const [user, setUser] = useState<{ email?: string; username?: string } | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [user, setUser] = useState<any>(null);
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [dbMovies, setDbMovies] = useState<Movie[]>([]);
-
+  
+  
   const allMovies = useMemo(() => {
     // Combine static movies with database movies
     const combined = [...movies];
@@ -183,7 +185,9 @@ export default function App() {
 
   useEffect(() => {
     // Fetch user
-    fetch('/api/me')
+    fetch('/api/me', {
+  credentials: 'include'
+})
       .then(res => res.json())
       .then(data => {
         if (data.user) {
@@ -405,7 +409,7 @@ export default function App() {
       className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold uppercase bg-red-600 text-white transition-all shadow-lg border border-white/20"
       title={user.email || user.username}
     >
-      {String(user.email || user.username || '?').trim().charAt(0).toUpperCase()}
+      {String(user?.email || user?.username || '?').trim().charAt(0).toUpperCase()}
     </div>
 
     <button 
