@@ -413,20 +413,6 @@ export default function App() {
     <LogIn className="w-6 h-6" />
   </button>
 )}
-            /* Кнопка входа для неавторизованных */
-            <button 
-              onClick={() => {
-                setAuthMode('login');
-                setIsAuthModalOpen(true);
-              }}
-              className={`p-2 rounded-full transition-colors ${
-                theme === 'dark' ? 'text-white hover:bg-white/10' : 'text-black hover:bg-black/10'
-              }`}
-              title={t.login}
-            >
-              <LogIn className="w-6 h-6" />
-            </button>
-          )}
           {/* Theme Switcher - Desktop */}
           <button 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
