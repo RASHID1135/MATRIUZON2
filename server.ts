@@ -180,6 +180,14 @@ async function startServer() {
     });
   }
 
+  app.use((req, res, next) => {
+  const userId = req.session?.userId || req.ip;
+
+  onlineUsers.set(userId, Date.now());
+
+  next();
+});
+  
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log('Vite middleware integrated.');
@@ -189,4 +197,14 @@ async function startServer() {
 console.log('Starting server...');
 startServer().catch(err => {
   console.error('Failed to start server:', err);
+});
+
+app.get('/api/online', (req, res) => {
+  const now = Date.now();
+
+  const activeUsers = [...onlineUsers.values()].filter(
+    time => now - time < 5 * 60 * 1000
+  );
+
+  res.json({ online: activeUsers.length });
 });
