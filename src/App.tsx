@@ -156,6 +156,7 @@ const categoryMap: Record<Category, { ru: string; en: string; uz: string }> = {
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ru');
+  const [online, setOnline] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -192,6 +193,19 @@ export default function App() {
       })
       .catch(() => {});
 
+    useEffect(() => {
+  const fetchOnline = () => {
+    fetch('/api/online')
+      .then(res => res.json())
+      .then(data => setOnline(data.online));
+  };
+
+  fetchOnline();
+  const interval = setInterval(fetchOnline, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+    
     // Fetch movies from DB
     fetch('/api/movies')
       .then(res => res.json())
@@ -366,6 +380,9 @@ export default function App() {
         </button>
 
         <div className="flex items-center gap-2 sm:gap-4">
+          <span className="text-xs text-green-500 font-bold">
+            👥 {online}
+              </span>
           <div className="relative group hidden sm:block">
             <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${
               theme === 'dark' ? 'text-gray-400 group-focus-within:text-white' : 'text-gray-500 group-focus-within:text-black'
