@@ -166,7 +166,6 @@ export default function App() {
   const [user, setUser] = useState<{ email?: string; username?: string } | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [user, setUser] = useState<any>(null);
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [dbMovies, setDbMovies] = useState<Movie[]>([]);
@@ -197,20 +196,7 @@ export default function App() {
       })
       .catch(() => {});
 
-    useEffect(() => {
-  const fetchOnline = () => {
-    fetch('/api/online')
-      .then(res => res.json())
-      .then(data => setOnline(data.online));
-  };
-
-  fetchOnline();
-  const interval = setInterval(fetchOnline, 5000);
-
-  return () => clearInterval(interval);
-}, []);
-    
-    // Fetch movies from DB
+ // Fetch movies from DB
     fetch('/api/movies')
       .then(res => res.json())
       .then(data => {
@@ -232,7 +218,20 @@ export default function App() {
       })
       .catch(err => console.error('Failed to fetch movies:', err));
   }, []);
+  
+    useEffect(() => {
+  const fetchOnline = () => {
+    fetch('/api/online')
+      .then(res => res.json())
+      .then(data => setOnline(data.online));
+  };
 
+  fetchOnline();
+  const interval = setInterval(fetchOnline, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+    
   const handleAuthSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAuthError('');
