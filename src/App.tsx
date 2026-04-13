@@ -162,6 +162,7 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(true);
+  const [user, setUser] = useState<{ email?: string; username?: string } | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('register');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
